@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <act_window id="action_detection_task"
+      name="检测项目"
+      res_model="detection.task"
+      view_mode="tree,form"
+      limit="80" />
+
+    <menuitem id="menu_detection_task"
+      name="检测"
+      parent=""
+      sequence="20"
+      action="action_detection_task" />
+
+    <record id="view_form_detection_task" model="ir.ui.view">
+      <field name="name">Detection Task Form</field>
+      <field name="model">detection.task</field>
+      <field name="arch" type="xml">
+	<form>
+
+            <group name="group_top">
+		<field name="NO"  groups="Detection.group_researchers"/>
+		<field name="Lot" groups="Detection.group_researchers"/>
+                <!-- <field name="Pro" attrs="{'invisible':[('show_read', '=', False)]}"/> -->
+		<field name="Pro" groups="Detection.group_analyst"/> 
+		<field name="H2O" groups="Detection.group_analyst"/>
+		<field name="CPC" groups="Detection.group_analyst"/>
+		<field name="Metal" groups="Detection.group_analyst"/>
+                <!-- <field name="datafile" />
+                <field name="Doc"/>
+                <button name="action_upload" type="object" string="选择数据文件" class="oe_highlight"/> -->
+	    </group>
+
+	</form>
+      </field>
+    </record>
+
+    <record id="view_tree_detection_task" model="ir.ui.view">
+      <field name="name">Detection Task Tree</field>
+      <field name="model">detection.task</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="NO"/>
+          <field name="Lot"/>
+          <field name="Pro"/>
+	  <field name="H2O"/>
+          <field name="CPC"/>
+	  <field name="Metal"/>
+        </tree>
+      </field>
+    </record>
+
+  </data>
+</openerp>

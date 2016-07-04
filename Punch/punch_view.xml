@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <act_window id="action_punch_task"
+      name="打卡记录检查"
+      res_model="punch.task"
+      view_mode="form" />
+
+    <menuitem id="menu_punch_task"
+      name="打卡检查"
+      parent=""
+      sequence="30"
+      action="action_punch_task" />
+
+    <record id="view_form_punch_task" model="ir.ui.view">
+      <field name="name">Punch Task Form</field>
+      <field name="model">punch.task</field>
+      <field name="arch" type="xml">
+	<form>
+
+            <group name="group_top">
+                <field name="datafile" />
+                <field name="records"/>
+                <button name="action_upload" type="object" string="选择数据文件" class="oe_highlight"/>
+	    </group>
+
+	</form>
+      </field>
+    </record>
+
+  </data>
+</openerp>
