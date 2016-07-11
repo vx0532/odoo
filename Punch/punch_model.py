@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields
+from openerp import models, fields, exceptions
 import base64
 
 class PunchTask(models.Model):
@@ -13,6 +13,7 @@ class PunchTask(models.Model):
         this=self.browse(cr,uid,ids[0])
         data = base64.decodestring(this.datafile)
         this.records=data
+        #raise exceptions.Warning(data)
 
         
 
