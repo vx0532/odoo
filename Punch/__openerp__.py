@@ -6,6 +6,5 @@
     'data': [
         'punch_view.xml',
         'security/ir.model.access.csv',
-        'security/detection_access_rules.xml',
     ]
 }

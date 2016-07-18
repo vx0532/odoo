@@ -21,7 +21,7 @@
             <group name="group_top">
                 <field name="datafile" />
                 <field name="records"/>
-                <button name="action_upload" type="object" string="选择数据文件" class="oe_highlight"/>
+                <button name="select_odd" type="object" string="查找异常考勤记录" class="oe_highlight"/>
 	    </group>
 
 	</form>
