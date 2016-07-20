@@ -9,8 +9,9 @@ import base64,xlrd,os #,StringIO,io,openpyxl
 class PunchTask(models.Model):
     _name = 'punch.task'
     _description = 'Punch task'
-    datafile=fields.Binary(u'Excel(.xlsx)',required=True)
-    records=fields.Text('有误记录')
+    datafile=fields.Binary(u'选择考勤Excel表',required=True)
+    duty_on=fields.Text(u'8:30前没打卡')
+    duty_off=fields.Text(u'17:00后没打卡')
     #rawData=xlrd.open_workbook('/home/caofa/test.xls')
     #table=rawData.sheets()[0]
     #x=table.row_values(2)
@@ -74,7 +75,35 @@ class PunchTask(models.Model):
         for i in range(len(duty_on_record_copy)):
             if len(duty_on_record_copy[i])>1:
                 tmp.append(' '.join(duty_on_record_copy[i]))
-        self.records='\n'.join(tmp) #'\n'.join(duty_on_output)
+        self.duty_on='\n'.join(tmp) #'\n'.join(duty_on_output)
+
+
+        duty_on_record=[] # 创建存储每个人的上班打卡的所有日期;duty_on_record记录每个人上班打开正常的所有日期;duty_on_record_copy存储每个人(第一个元素是姓名)打没打卡的情况;
+        duty_on_record_copy=[]
+        for i in range(len(name_unique)):
+            duty_on_record.append([])
+            duty_on_record_copy.append([])
+            duty_on_record_copy[i].append(name_unique[i])
+        
+
+        for i in duty_off:
+            for index in range(len(name_unique)):
+                if col_name[i]==name_unique[index]:
+                    duty_on_record[index].append(col_date[i])
+                    break
+
+        duty_on_output=[]
+        for i in range(len(duty_on_record)):
+           for date in date_unique:
+               if date not in duty_on_record[i]:
+                   #duty_on_output.append(','.join([name_unique[i],date]))
+                   duty_on_record_copy[i].append(date)
+        tmp=[]
+        for i in range(len(duty_on_record_copy)):
+            if len(duty_on_record_copy[i])>1:
+                tmp.append(' '.join(duty_on_record_copy[i]))
+        self.duty_off='\n'.join(tmp) #'\n'.join(duty_on_output)
+
 
 '''
         #data=StringIO.StringIO(base64.b64decode(self.datafile)) # thie method can get data by transportation of computer memories and can only read xlsx file rather that xlsx file;
