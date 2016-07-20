@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api, exceptions
-import base64,xlrd,StringIO
+from openerp import models, fields, api#, exceptions
+import base64,xlrd,os #,StringIO,io,openpyxl
 #import xlrd,tkFileDialog,Tkinter
 #from io import StringIO
-from openpyxl import workbook
-from openpyxl.reader.excel  import load_workbook
+#from openpyxl import workbook
+#from openpyxl import load_workbook
 
 class PunchTask(models.Model):
     _name = 'punch.task'
@@ -14,18 +14,58 @@ class PunchTask(models.Model):
     #rawData=xlrd.open_workbook('/home/caofa/test.xls')
     #table=rawData.sheets()[0]
     #x=table.row_values(2)
+
     @api.multi
-    def select_odd(self):
-        data_file_p=open('/tmp/test.xlsx','w')                # this method can get data by transportation of a part of disk
+    def select_odd(self,cr):
+        filename='/tmp/%s.xlsx' % cr['uid']
+        data_file_p=open(filename,'w')                # this method can get data by transportation of a part of disk
         #data_file_p.write((base64.b64decode(self.datafile)))
         data_file_p.write((base64.decodestring(self.datafile)))
         data_file_p.close()
-        wb=xlrd.open_workbook(filename=r'/tmp/test.xlsx')
+        wb=xlrd.open_workbook(filename)
+        os.remove(filename)
         table=wb.sheets()[0]
-        tem=table.row_values(2)
-        self.records=tem[2]
+        col_name=table.col_values(1)[1:]
+        col_datetime=table.col_values(3)[1:]
+        col_date=[]
+        col_time=[]
+        for c in col_datetime:
+            col_date.append(c[:10])
+            col_time.append(c[11:])
+        date_unique=list(set(col_date))
+        name_unique=list(set(col_name))
+        duty_on=[]
+        duty_off=[]
+        for i in range(len(col_time)):
+            if col_time[i]<'08:31:00':
+                duty_on.append(i)
+            elif col_time[i]>'17:00:00':
+                duty_off.append(i)
+
+        duty_on_record=[]
+        for i in range(len(name_unique)):
+            duty_on_record.append([])
+        
+        duty_on_record_copy=duty_on_record
+
+        for i in duty_on:
+            for index in range(len(name_unique)):
+                if col_name[i]==name_unique[index]:
+                    duty_on_record[index].append(col_date[i])
+                    break
+
+        duty_on_output=[]
+        for i in range(len(duty_on_record)):
+           for date in date_unique:
+               if date not in duty_on_record[i]:
+                   #duty_on_output.append(','.join([name_unique[i],date]))
+                   duty_on_record_copy
+
+        self.records='\n'.join(duty_on_output)
+
 '''
         #data=StringIO.StringIO(base64.b64decode(self.datafile)) # thie method can get data by transportation of computer memories and can only read xlsx file rather that xlsx file;
+        #data=io.BytesIO(base64.b64decode(self.datafile))
         data=StringIO.StringIO(base64.decodestring(self.datafile))
         wb=load_workbook(data)
         table=wb.worksheets[0]
