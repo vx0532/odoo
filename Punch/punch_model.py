@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api#, exceptions
-import base64,xlrd,os,io,pandas #,StringIO,io,openpyxl
+import base64,io,pandas #,StringIO,openpyxl,xlrd,os,
 #import xlrd,tkFileDialog,Tkinter
 #from io import StringIO
 #from openpyxl import workbook

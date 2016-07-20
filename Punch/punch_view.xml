@@ -17,11 +17,18 @@
       <field name="model">punch.task</field>
       <field name="arch" type="xml">
 	<form>
-            
-            <button name="select_odd" type="object" string="查找异常考勤记录" class="oe_highlight"/>
-            <group name="group_top">
+
+            <group>
                 <group name="group_left">
                     <field name="datafile" />
+                </group>
+                <group name="group_right">
+                    <button name="select_odd" type="object" string="查找异常考勤记录" class="oe_highlight"/>
+                </group>
+            </group>
+
+            <group name="group_top">
+                <group name="group_left">
                     <field name="duty_on"/>
                 </group>
                 <group name="group_right">
