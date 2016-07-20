@@ -33,6 +33,14 @@ class PunchTask(models.Model):
             col_date.append(c[:10])
             col_time.append(c[11:])
         date_unique=list(set(col_date))
+
+        date_unique_copy=date_unique # delete the possible holiday which workers are less than 4 presons;
+        for date_i in date_unique_copy:
+            index_tmp=[i for i, key in enumerate(col_date) if key == date_i]
+            date_name=[col_name[j] for j in index_tmp]
+            if len(set(date_name))<=3:
+                date_unique.remove(date_i)
+
         name_unique=list(set(col_name))
         duty_on=[]
         duty_off=[]
@@ -42,11 +50,13 @@ class PunchTask(models.Model):
             elif col_time[i]>'17:00:00':
                 duty_off.append(i)
 
-        duty_on_record=[]
+        duty_on_record=[] # 创建存储每个人的上班打卡的所有日期;duty_on_record记录每个人上班打开正常的所有日期;duty_on_record_copy存储每个人(第一个元素是姓名)打没打卡的情况;
+        duty_on_record_copy=[]
         for i in range(len(name_unique)):
             duty_on_record.append([])
+            duty_on_record_copy.append([])
+            duty_on_record_copy[i].append(name_unique[i])
         
-        duty_on_record_copy=duty_on_record
 
         for i in duty_on:
             for index in range(len(name_unique)):
@@ -59,9 +69,12 @@ class PunchTask(models.Model):
            for date in date_unique:
                if date not in duty_on_record[i]:
                    #duty_on_output.append(','.join([name_unique[i],date]))
-                   duty_on_record_copy
-
-        self.records='\n'.join(duty_on_output)
+                   duty_on_record_copy[i].append(date)
+        tmp=[]
+        for i in range(len(duty_on_record_copy)):
+            if len(duty_on_record_copy[i])>1:
+                tmp.append(' '.join(duty_on_record_copy[i]))
+        self.records='\n'.join(tmp) #'\n'.join(duty_on_output)
 
 '''
         #data=StringIO.StringIO(base64.b64decode(self.datafile)) # thie method can get data by transportation of computer memories and can only read xlsx file rather that xlsx file;
