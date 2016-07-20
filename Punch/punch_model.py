@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api#, exceptions
-import base64,xlrd,os #,StringIO,io,openpyxl
+import base64,xlrd,os,io,pandas #,StringIO,io,openpyxl
 #import xlrd,tkFileDialog,Tkinter
 #from io import StringIO
 #from openpyxl import workbook
@@ -18,16 +18,25 @@ class PunchTask(models.Model):
 
     @api.multi
     def select_odd(self,cr):
-        filename='/tmp/%s.xlsx' % cr['uid']
-        data_file_p=open(filename,'w')                # this method can get data by transportation of a part of disk
-        #data_file_p.write((base64.b64decode(self.datafile)))
-        data_file_p.write((base64.decodestring(self.datafile)))
-        data_file_p.close()
-        wb=xlrd.open_workbook(filename)
-        os.remove(filename)
-        table=wb.sheets()[0]
-        col_name=table.col_values(1)[1:]
-        col_datetime=table.col_values(3)[1:]
+
+        #filename='/tmp/%s.xlsx' % cr['uid']
+        #data_file_p=open(filename,'w')  # this method can get data by transportation of a part of disk
+        ##data_file_p.write((base64.b64decode(self.datafile)))
+        #data_file_p.write((base64.decodestring(self.datafile)))
+        #data_file_p.close()
+        #wb=xlrd.open_workbook(filename)
+        #os.remove(filename)
+        #table=wb.sheets()[0]
+        #col_name=table.col_values(1)[1:]
+        #col_datetime=table.col_values(3)[1:]
+
+        file_like=io.BytesIO(base64.b64decode(self.datafile))
+        #datax=pandas.read_excel(file_like)
+        table=pandas.ExcelFile(file_like)
+        col_name=table.parse(0).icol(1).real[1:]
+        col_datetime=table.parse(0).icol(3)[1:]
+        
+
         col_date=[]
         col_time=[]
         for c in col_datetime:
