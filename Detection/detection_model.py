@@ -15,9 +15,8 @@ class DetectionTask(models.Model):
     H2O=fields.Char('水分（%）')
     CPC=fields.Char('CPC（%）')
     Metal=fields.Char('重金属（%）')
-    Doc=fields.Integer("text")
-    
-    datafile=fields.Binary("File")
+    Active=fields.Boolean('确认收样',default=False)
+
     
     #@api.onchange("datafile")
     def action_upload(self,cr,uid,ids,context=None):

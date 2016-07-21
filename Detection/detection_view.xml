@@ -27,10 +27,9 @@
 		<field name="H2O" groups="Detection.group_analyst"/>
 		<field name="CPC" groups="Detection.group_analyst"/>
 		<field name="Metal" groups="Detection.group_analyst"/>
-                <!-- <field name="datafile" />
-                <field name="Doc"/>
-                <button name="action_upload" type="object" string="选择数据文件" class="oe_highlight"/> -->
+                <field name="Active" groups="Detection.group_analyst"/>
 	    </group>
+            
 
 	</form>
       </field>
@@ -40,7 +39,8 @@
       <field name="name">Detection Task Tree</field>
       <field name="model">detection.task</field>
       <field name="arch" type="xml">
-        <tree>
+        <tree colors="gray:Active==False">
+          <field name="Active"/> <!--attrs="{'invisible':True}"-->
           <field name="NO"/>
           <field name="Lot"/>
           <field name="Pro"/>
