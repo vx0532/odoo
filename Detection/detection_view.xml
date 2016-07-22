@@ -18,18 +18,31 @@
       <field name="model">detection.task</field>
       <field name="arch" type="xml">
 	<form>
-
+ 
+            <group name="group_top">
+                <!--<label for="name" string="确认收样"/>-->
+                <group name="group_left">
+                    <h2><em>确认收样  </em><field name="Active" groups="Detection.group_analyst" /></h2>
+                </group>
+                <group name="group_right">
+                    <field name="Applicant" />
+                    <field name="Receiver"  />
+                    <!--<field name="write_id"/>-->
+                </group>
+            </group>
             <group name="group_top">
 		<field name="NO"  groups="Detection.group_researchers"/>
 		<field name="Lot" groups="Detection.group_researchers"/>
+                <field name="pro" groups="Detection.group_researchers"/>
+                <field name="h2o" groups="Detection.group_researchers"/>
+                <field name="cpc" groups="Detection.group_researchers"/>
+                <field name="metal" groups="Detection.group_researchers"/>
                 <!-- <field name="Pro" attrs="{'invisible':[('show_read', '=', False)]}"/> -->
-		<field name="Pro" groups="Detection.group_analyst"/> 
-		<field name="H2O" groups="Detection.group_analyst"/>
-		<field name="CPC" groups="Detection.group_analyst"/>
-		<field name="Metal" groups="Detection.group_analyst"/>
-                <field name="Active" groups="Detection.group_analyst"/>
+		<field name="Pro" groups="Detection.group_analyst" attrs="{'invisible':[('pro', '=', False)]}"/> 
+		<field name="H2O" groups="Detection.group_analyst" attrs="{'invisible':[('h2o', '=', False)]}"/>
+		<field name="CPC" groups="Detection.group_analyst" attrs="{'invisible':[('cpc', '=', False)]}"/>
+		<field name="Metal" groups="Detection.group_analyst" attrs="{'invisible':[('metal', '=', False)]}"/>
 	    </group>
-            
 
 	</form>
       </field>
@@ -39,8 +52,8 @@
       <field name="name">Detection Task Tree</field>
       <field name="model">detection.task</field>
       <field name="arch" type="xml">
-        <tree colors="gray:Active==False">
-          <field name="Active"/> <!--attrs="{'invisible':True}"-->
+        <tree colors="green:Active==False">
+          <field name="Active" invisible='True'/> 
           <field name="NO"/>
           <field name="Lot"/>
           <field name="Pro"/>

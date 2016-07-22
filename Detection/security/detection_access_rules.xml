@@ -7,7 +7,7 @@
         <field name="model_id" ref="model_detection_task"/>
         <field name="groups" eval="[(4, ref('base.group_user'))]"/>
         <field name="domain_force">
-          [('user_id','in',[user.id,False])]
+           [(1,'=',1)] <!--[('user_id','in',[user.id,False])]-->
         </field>
     </record>
 
