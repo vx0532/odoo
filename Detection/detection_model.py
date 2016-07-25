@@ -36,14 +36,8 @@ class DetectionTask(models.Model):
         return super(DetectionTask, self).write(vals)
 
     @api.multi
-    def xx(self):
-        raise ValidationError("输入的数字必须在0~100之间!")
-        return true
-
-    @api.multi
     def _for_readonly(self):
         if self.Pro:
-            self.xx
             self.Pro_copy=self.Pro
         if self.H2O:
             self.H2O_copy=self.H2O
