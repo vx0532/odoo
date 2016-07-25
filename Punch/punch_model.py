@@ -60,7 +60,12 @@ class PunchTask(models.Model):
             elif col_time[i]>'17:00:00':
                 duty_off.append(i)
 
-        duty_on_record=[] # 创建存储每个人的上班打卡的所有日期;duty_on_record记录每个人上班打开正常的所有日期;duty_on_record_copy存储每个人(第一个元素是姓名)打没打卡的情况;
+        self.duty_on=self.get_string(name_unique,date_unique,col_name,col_date,duty_on)
+        self.duty_off=self.get_string(name_unique,date_unique,col_name,col_date,duty_off)
+
+
+    def get_string(self,name_unique,date_unique,col_name,col_date,duty):
+        duty_on_record=[] # 创建存储每个人的上班打卡的所有日期;duty_on_record记录每个人上班打卡正常的所有日期;duty_on_record_copy存储每个人(第一个元素是姓名)打没打卡的情况;
         duty_on_record_copy=[]
         for i in range(len(name_unique)):
             duty_on_record.append([])
@@ -68,7 +73,7 @@ class PunchTask(models.Model):
             duty_on_record_copy[i].append(name_unique[i])
         
 
-        for i in duty_on:
+        for i in duty:
             for index in range(len(name_unique)):
                 if col_name[i]==name_unique[index]:
                     duty_on_record[index].append(col_date[i])
@@ -84,34 +89,8 @@ class PunchTask(models.Model):
         for i in range(len(duty_on_record_copy)):
             if len(duty_on_record_copy[i])>1:
                 tmp.append(' '.join(duty_on_record_copy[i]))
-        self.duty_on='\n'.join(tmp) #'\n'.join(duty_on_output)
 
-
-        duty_on_record=[] # 创建存储每个人的上班打卡的所有日期;duty_on_record记录每个人上班打开正常的所有日期;duty_on_record_copy存储每个人(第一个元素是姓名)打没打卡的情况;
-        duty_on_record_copy=[]
-        for i in range(len(name_unique)):
-            duty_on_record.append([])
-            duty_on_record_copy.append([])
-            duty_on_record_copy[i].append(name_unique[i])
-        
-
-        for i in duty_off:
-            for index in range(len(name_unique)):
-                if col_name[i]==name_unique[index]:
-                    duty_on_record[index].append(col_date[i])
-                    break
-
-        duty_on_output=[]
-        for i in range(len(duty_on_record)):
-           for date in date_unique:
-               if date not in duty_on_record[i]:
-                   #duty_on_output.append(','.join([name_unique[i],date]))
-                   duty_on_record_copy[i].append(date)
-        tmp=[]
-        for i in range(len(duty_on_record_copy)):
-            if len(duty_on_record_copy[i])>1:
-                tmp.append(' '.join(duty_on_record_copy[i]))
-        self.duty_off='\n'.join(tmp) #'\n'.join(duty_on_output)
+        return '\n'.join(tmp) #'\n'.join(duty_on_output)
 
 
 '''
