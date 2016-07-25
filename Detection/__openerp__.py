@@ -7,6 +7,7 @@
     'category':'Detection',
     'data': [
         'detection_view.xml',
+        'view_modify.xml',
         'security/detection_access_rules.xml',
         'security/ir.model.access.csv',
     ]
