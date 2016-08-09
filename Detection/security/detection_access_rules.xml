@@ -11,16 +11,6 @@
         </field>
     </record>
 
-
-    <record id="detection_task_researchers_rule" model="ir.rule">
-        <field name="name">Detection Tasks only for researchers</field>
-        <field name="model_id" ref="model_detection_task"/>
-        <field name="groups" eval="[(4, ref('Detection.group_researchers'))]"/>
-        <field name="domain_force">
-           [('NO','=like',"D%")] <!--['|',('NO','=like',"DP%"),('NO','=like','DQ%')]-->
-        </field>
-    </record>
-
     <record id="group_researchers" model="res.groups">
       <field name="name">研发</field>
       <field name="category_id" ref="base.module_category_detection"/>
@@ -30,6 +20,15 @@
       <field name="name">检测</field>
       <field name="category_id" ref="base.module_category_detection"/>
       <field name="implied_ids" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="detection_task_researchers_rule" model="ir.rule">
+        <field name="name">Detection Tasks only for researchers</field>
+        <field name="model_id" ref="model_detection_task"/>
+        <field name="groups" eval="[(4, ref('Detection.group_researchers'))]"/>
+        <field name="domain_force">
+           [('NO','=like',"D%")] <!--['|',('NO','=like',"DP%"),('NO','=like','DQ%')]-->
+        </field>
     </record>
 
   </data>
