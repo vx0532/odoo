@@ -29,7 +29,7 @@ sudo apt-get install google-chrome-stable
 3. 配置JDK：
 1)下载JDK :
 
-      点击链接在Oracle官网下载JDK7u55:JDKu55
+      点击链接在Oracle官网下载JDK7u55:JDKu55 下载JDK1.8/1.9 最新版
 
     2)把jdk压缩文件放到/usr/local文件夹下
 
