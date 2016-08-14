@@ -1,0 +1,9 @@
+1. Perceptron: 固定幅度矫正反馈
+2. ADalineGD：adaptive line Neuron;adaptive line gradient desent
+3. ADalineSGD:adaptive line stochastic gradient desent; 
+large scale machine learning;
+4.from sklearn.linear_model import LogisticRegression
+5. tackling overfitting via regularization
+6.from sklearn.svm import SVC
+svm=SVC(kernal='linear'/'entropy')
+7.Decision tree learning: from sklearn.tree import DecisionTreeClassifier

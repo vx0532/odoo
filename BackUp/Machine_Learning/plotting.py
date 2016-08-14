@@ -8,6 +8,7 @@ y2=[0.08,0.12,0.12,0.2,0.21,0.23,0.19,0.2,0.21,0.23,0.23,0.24]
 y3=[0,0,0.04,0.04,0.05,0.05,0.05]
 fig=plt.figure()
 ax=fig.add_subplot(111)
+#ax1    = fig.add_axes([0.1, 0.1, 0.2, 0.2])
 L1,=ax.plot(x1,y1,linewidth=2,color='r',label='1st')
 ax.plot(x1,y1,'k*')
 L2,=ax.plot(x2,y2,linewidth=2,color='g',label='2nd')
