@@ -47,10 +47,10 @@ def plot_decision_regions(X,y,classifier,test_idx=None,
         plt.scatter(X_test[:,0],X_test[:,1],c='',
                 alpha=1.0,linewidth=1,marker='o',
                 s=55,label='test set')
-'''
+
 X_combined_std=np.vstack((X_train_std,X_test_std))
 y_combined=np.hstack((y_train,y_test))
-
+'''
 plot_decision_regions(X=X_combined_std,y=y_combined,classifier=ppn,
                       test_idx=range(105,150))
 plt.xlabel('petal length [standardized]')
@@ -76,6 +76,7 @@ y_xor=np.where(y_xor,1,-1)
 svm=SVC(kernel='rbf',random_state=0,gamma=0.1,C=10.0)
 svm.fit(X_xor,y_xor)
 '''
+'''
 from sklearn.tree import DecisionTreeClassifier
 tree=DecisionTreeClassifier(criterion='entropy',max_depth=3,
                             random_state=0)
@@ -93,10 +94,31 @@ from sklearn.tree import export_graphviz
 export_graphviz(tree, out_file='tree.dot',
                 feature_names=['petal length',
                                'petal width'])
-
-
-
-
+'''
+X_combined=np.vstack([X_train,X_test])
+y_combined=np.hstack([y_train,y_test])
+'''
+from sklearn.ensemble import RandomForestClassifier
+forest=RandomForestClassifier(criterion='entropy',
+                              n_estimators=10,random_state=1,
+                              n_jobs=2)
+forest.fit(X_train,y_train)
+plot_decision_regions(X_combined, y_combined, 
+                      classifier=forest, 
+                      test_idx=range(105,150))
+plt.xlabel('petal length')
+plt.ylabel('petal width')
+plt.legend(loc='upper left')
+plt.show()
+'''
+from sklearn.neighbors import KNeighborsClassifier
+knn=KNeighborsClassifier(n_neighbors=5,p=2,metric='minkowski')
+knn.fit(X_train_std,y_train)
+plot_decision_regions(X_combined_std, y_combined, 
+                      classifier=knn, test_idx=range(105,150))
+plt.xlabel('petal length [standardized]')
+plt.ylabel('petal width [standardized]')
+plt.show()
 
 
 

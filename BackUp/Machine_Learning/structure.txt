@@ -7,3 +7,5 @@ large scale machine learning;
 6.from sklearn.svm import SVC
 svm=SVC(kernal='linear'/'entropy')
 7.Decision tree learning: from sklearn.tree import DecisionTreeClassifier
+8.random forests, K-nearest neighbor classifier
+
