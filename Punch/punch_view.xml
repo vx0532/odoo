@@ -24,6 +24,7 @@
                 </group>
                 <group name="group_right">
                     <button name="select_odd" type="object" string="查找异常考勤记录" class="oe_highlight"/>
+                    <button name="plotfig" type="object" string="做图" class="oe_highlight"/>
                 </group>
             </group>
 
