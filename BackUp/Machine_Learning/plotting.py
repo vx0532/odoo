@@ -30,6 +30,8 @@ axc=ax.twinx()
 L3,=axc.plot(x3,y3,linewidth=2,color='b',label='3th')
 axc.plot(x3,y3,'k*')
 axc.axis([0,25,-0.045,0.115])
+#plt.sca(ax1)   ❷ # 选择图表2的子图1
+#plt.plot(x, np.sin(i*x))
 
 plt.xlabel('Time / h')
 plt.ylabel('Content / %')
@@ -42,3 +44,4 @@ plt.legend([L1,L2,L3], ['1st', '2nd','3rd'])
 #line_down, = plt.plot([3,2,1], label='Line 1')
 #plt.legend([line_up, line_down], ['Line Up', 'Line Down'])
 plt.show()
+plt.savefig('/home/caofa/xx.png')

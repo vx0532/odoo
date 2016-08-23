@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from openerp import models, fields, api#, exceptions
-import base64,io,pandas #,StringIO,openpyxl,xlrd,os,
+from openerp import models, fields, api,exceptions
+import base64,io,pandas,os #,StringIO,openpyxl,xlrd
 import matplotlib.pyplot as plt
 import numpy as np
 #import xlrd,tkFileDialog,Tkinter
@@ -12,6 +12,7 @@ class PunchTask(models.Model):
     _name = 'punch.task'
     _description = 'Punch task'
     datafile=fields.Binary(u'选择考勤Excel表',required=True)
+    picture=fields.Binary(u'图像')
     duty_on=fields.Text(u'8:30前没打卡')
     duty_off=fields.Text(u'17:00后没打卡')
     #rawData=xlrd.open_workbook('/home/caofa/test.xls')
@@ -32,6 +33,9 @@ class PunchTask(models.Model):
           L_names=[]
           colors=['r','g','b','y','c','m','k','w']
           for i in np.arange(1,len(col_names),2):
+            if (i-1)/2==8:
+              raise exceptions.Warning(u'最多同时画8种线，否则颜色难辨！')
+              break
             if not plot_yy:
               try:
                 int(table.iloc[1,i])
@@ -61,10 +65,12 @@ class PunchTask(models.Model):
                 L.append(tem)
                 L_names.append(col_names[i+1])
                 axc.plot(x_tem,y_tem,'k*')
-            if (i-1)/2==7:
-              break
           plt.legend(L,L_names,'upper left')
-          plt.show()
+          tem='/tmp/%s.png' % cr['uid']
+          plt.savefig(tem)
+          pic_data=open(tem,'rb').read()
+          self.write({'picture':base64.encodestring(pic_data)})
+          os.remove(tem)
         #except:
         #  pass
 
