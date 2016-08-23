@@ -4,13 +4,24 @@
     <act_window id="action_punch_task"
       name="打卡记录检查"
       res_model="punch.task"
-      view_mode="form" />
+      view_mode="tree,form" />
 
     <menuitem id="menu_punch_task"
       name="打卡检查"
       parent=""
       sequence="30"
       action="action_punch_task" />
+
+    <record id="view_tree_punch_task" model="ir.ui.view">
+      <field name="name">Punch Task Tree</field>
+      <field name="model">punch.task</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="create_uid"/>
+          <field name="create_date"/>
+        </tree>
+      </field>
+    </record>
 
     <record id="view_form_punch_task" model="ir.ui.view">
       <field name="name">Punch Task Form</field>
