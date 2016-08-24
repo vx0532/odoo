@@ -2,12 +2,12 @@
 <openerp>
   <data>
     <act_window id="action_punch_task"
-      name="打卡记录检查"
+      name="混合应用"
       res_model="punch.task"
       view_mode="tree,form" />
 
     <menuitem id="menu_punch_task"
-      name="打卡检查"
+      name="美泰App"
       parent=""
       sequence="30"
       action="action_punch_task" />

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from openerp import models, fields, api,exceptions
 import base64,io,pandas,os #,StringIO,openpyxl,xlrd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 #import xlrd,tkFileDialog,Tkinter
@@ -21,58 +23,61 @@ class PunchTask(models.Model):
 
     @api.multi
     def plotfig(self,cr):
-       # try:
-          file_like=io.BytesIO(base64.b64decode(self.datafile))
-          #table=pandas.ExcelFile(file_like)
-          table=pandas.read_excel(file_like)
-          col_names=table.columns
-          fig=plt.figure()
-          ax=fig.add_subplot(111)
-          plot_yy=False
-          L=[]
-          L_names=[]
-          colors=['r','g','b','y','c','m','k','w']
-          for i in np.arange(1,len(col_names),2):
-            if (i-1)/2==8:
-              raise exceptions.Warning(u'最多同时画8种线，否则颜色难辨！')
-              break
-            if not plot_yy:
-              try:
-                int(table.iloc[1,i])
-                x_tem=table.iloc[:,i]
-                y_tem=table.iloc[:,i+1]
-                tem,=ax.plot(x_tem,y_tem,linewidth=2,color=colors[(i-1)/2])
-                L.append(tem)
-                L_names.append(col_names[i])
-                ax.plot(x_tem,y_tem,'k*')
-              except:
-                ax.grid(True)
-                #ax.spines['right'].set_color('none')
-                #ax.spines['top'].set_color('none')
-                #ax.spines['bottom'].set_position(('data',0))
-                #ax.spines['left'].set_position(('data',0))
-                plt.title(col_names[0],fontweight='bold')
-                plt.xlabel(table.iloc[0,0])
-                plt.ylabel(table.iloc[1,0])
-                plot_yy=True
-                axc=ax.twinx()
-                plt.ylabel(table.iloc[1,i])
-            if plot_yy:
-              if i+1<len(col_names):
-                x_tem=table.iloc[:,i+1]
-                y_tem=table.iloc[:,i+2]
-                tem,=axc.plot(x_tem,y_tem,linewidth=2,color=colors[(i-1)/2])
-                L.append(tem)
-                L_names.append(col_names[i+1])
-                axc.plot(x_tem,y_tem,'k*')
-          plt.legend(L,L_names,'upper left')
-          tem='/tmp/%s.png' % cr['uid']
-          plt.savefig(tem)
-          pic_data=open(tem,'rb').read()
-          self.write({'picture':base64.encodestring(pic_data)})
-          os.remove(tem)
-        #except:
-        #  pass
+      file_like=io.BytesIO(base64.b64decode(self.datafile))
+      table=pandas.read_excel(file_like,header=None)#header=None
+      col_names=table.iloc[0,:]
+      fig=plt.figure()
+      ax=fig.add_axes([0.1,0.1,0.68,0.85])
+      plot_yy=False
+      L=[]
+      L_names=[]
+      index_color=-1
+      last_color=''
+      colors=['r','g','b','y','c','m','k','w']
+      for i in np.arange(1,len(col_names),2):
+        if index_color==8:
+          raise exceptions.Warning(u'最多同时画8种线，否则颜色难辨！')
+          break
+        if not plot_yy:
+          if type(table.iloc[2,i])==int or type(table.iloc[2,i])==float:
+            x_tem=table.iloc[1:,i]
+            y_tem=table.iloc[1:,i+1]
+            if last_color!=col_names[i]:
+              index_color+=1
+              last_color=col_names[i]
+            tem,=ax.plot(x_tem,y_tem,linewidth=2,color=colors[index_color])
+            L.append(tem)
+            L_names.append(col_names[i])
+            ax.plot(x_tem,y_tem,'k*')
+          else:
+            ax.grid(True)
+            #ax.spines['right'].set_color('none')
+            #ax.spines['top'].set_color('none')
+            #ax.spines['bottom'].set_position(('data',0))
+            #ax.spines['left'].set_position(('data',0))
+            plt.title(col_names[0],fontweight='bold')
+            plt.xlabel(table.iloc[1,0])
+            plt.ylabel(table.iloc[2,0])
+            plot_yy=True
+            axc=ax.twinx()
+            plt.ylabel(table.iloc[2,i])
+        if plot_yy:
+          if i+1<len(col_names):
+            x_tem=table.iloc[1:,i+1]
+            y_tem=table.iloc[1:,i+2]
+            if last_color!=col_names[i]:
+              index_color+=1
+              last_color=col_names[i+1]
+            tem,=axc.plot(x_tem,y_tem,linewidth=2,color=colors[index_color])
+            L.append(tem)
+            L_names.append(col_names[i+1])
+            axc.plot(x_tem,y_tem,'k*')
+      fig.legend(L,L_names,loc='right',ncol=1,shadow=True,title=u'图例')#,bbox_to_anchor=[1.0, 0.5]
+      tem='/tmp/%s.png' % cr['uid']
+      plt.savefig(tem)
+      pic_data=open(tem,'rb').read()
+      self.write({'picture':base64.encodestring(pic_data)})
+      os.remove(tem)
 
     @api.multi
     def select_odd(self,cr):
