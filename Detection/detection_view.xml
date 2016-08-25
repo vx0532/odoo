@@ -9,8 +9,8 @@
 
     <menuitem id="menu_detection_task"
       name="检测"
-      parent=""
-      sequence="20"
+      parent="Punch.menu_punch_task"
+      sequence="2"
       action="action_detection_task" />
 
     <record id="view_form_detection_task" model="ir.ui.view">

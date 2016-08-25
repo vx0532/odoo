@@ -27,7 +27,7 @@ class PunchTask(models.Model):
       table=pandas.read_excel(file_like,header=None)#header=None
       col_names=table.iloc[0,:]
       fig=plt.figure()
-      ax=fig.add_axes([0.1,0.1,0.68,0.85])
+      ax=fig.add_axes([0.1,0.1,0.65,0.85])
       plot_yy=False
       L=[]
       L_names=[]

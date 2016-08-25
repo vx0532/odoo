@@ -5,6 +5,7 @@
     'application': True,
     'data': [
         'punch_view.xml',
+        'view_modify.xml',
         'security/ir.model.access.csv',
     ]
 }

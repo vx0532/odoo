@@ -9,7 +9,12 @@
     <menuitem id="menu_punch_task"
       name="美泰App"
       parent=""
-      sequence="30"
+      sequence="30" />
+
+    <menuitem id="menu_punch_plot"
+      name="打卡/画图"
+      parent="menu_punch_task"
+      sequence="10"
       action="action_punch_task" />
 
     <record id="view_tree_punch_task" model="ir.ui.view">
@@ -28,18 +33,19 @@
       <field name="model">punch.task</field>
       <field name="arch" type="xml">
 	<form >
-
             <group>
                 <group name="group_left">
                     <field name="datafile" />
-                    <field name="picture" widget="image" readonly="1"/>
                 </group>
                 <group name="group_right">
                     <button name="select_odd" type="object" string="查找异常考勤记录" class="oe_highlight"/>
                     <button name="plotfig" type="object" string="做图" class="oe_highlight"/>
+                    <img t-attf-src="static/src/img/we.jpg" style="width:100%"/>
                 </group>
             </group>
-
+            <group>
+              <field name="picture" widget="image" readonly="1" class="my_image"/>
+            </group>
             <group name="group_top">
                 <group name="group_left">
                     <field name="duty_on" readonly="1"/>

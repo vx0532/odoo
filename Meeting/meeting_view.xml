@@ -11,8 +11,8 @@
     <!-- Menu Item to open To-Do Task list -->
     <menuitem id="menu_meeting_task"
       name="会议"
-      parent=""
-      sequence="20"
+      parent="Punch.menu_punch_task"
+      sequence="1"
       action="action_meeting_task" />
 
     <!-- To-Do Task Form view -->

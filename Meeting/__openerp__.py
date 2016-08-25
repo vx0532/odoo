@@ -2,7 +2,7 @@
     'name': '发布会议',
     'description': '发布会议，统计与会人员',
     'author': 'Cao Fa',
-    'depends': ['mail'],
+    'depends': ['mail','Punch'],
     'application': True,
     'data': [
         'meeting_view.xml',
