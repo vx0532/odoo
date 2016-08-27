@@ -1,12 +1,48 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
-x=[1,2,3,4]
-y=[4,7,9,8]
-fig=plt.figure()
-ax=fig.add_axes([0.1,0.1,0.8,0.9])
-l1,=ax.plot(x,y)
-l2,=ax.plot(y,x)
-fig.legend((l1,l2),['line1','line2'],'right',ncol=1)
-#plt.axis('equal')
-plt.show()
+'''
+X=[1,2,3,4,5,6]
+y=[2.5,3.51,4.45,5.52,6.47,7.51]
+z1=np.polyfit(X, y, 1)
+p1=np.poly1d(z1)
+'''
+def polyfit(x,y,degree):
+    results={}
+    coeffs=np.polyfit(x, y, degree)
+    results['polynomial']=coeffs.tolist()
+    p=np.poly1d(coeffs)
+    yhat=p(x)
+    ybar=np.sum(y)/len(y)
+    ssreg=np.sum((yhat-ybar)**2)
+    sstot=np.sum((y-ybar)**2)
+    results['determination']=ssreg/sstot
+    return results
+x=[1,2,3,4,5,6]
+y=[2.5,3.51,4.45,5.52,6.47,7.2]
+z1=polyfit(x, y, 2) 
+print(z1['polynomial'])
+z2=np.poly1d(z1['polynomial'])
+print(z2)
+plt.plot(z2)
+plt.show()   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
