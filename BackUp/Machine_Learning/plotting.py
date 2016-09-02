@@ -45,3 +45,9 @@ plt.legend([L1,L2,L3], ['1st', '2nd','3rd'])
 #plt.legend([line_up, line_down], ['Line Up', 'Line Down'])
 plt.show()
 plt.savefig('/home/caofa/xx.png')
+
+'''
+f,axarr=plt.subplots(nrows=2,ncols=2,
+        sharex='col',sharey='row',figsize=(7,5))
+axarr[0,0].scatter(X,Y,c='blue',marker='^',s=50)
+'''
