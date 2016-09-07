@@ -117,9 +117,14 @@ apt-get install gcc automake autoconf libtool make
 6. 安装eclipse 和 PyDev
 6.1 登陆eclipse官网，下载eclipse*.tar.gz，解压：tar -zxvf *.tar.gz; 
 6.2 进入解压文件，双击eclipse-inst;选择安装环境(java/others);
-6.3 运行eclipse；help--install new software--add--(Name:pydev;Location:http://pydev.org/updates);
+6.3 运行eclipse；help--install new software--add--
 6.4 安装完成Pydev；windows--Preferences--Pydev--Interpreters--Python Interpreter;
 6.5 Main Menu给eclipse添加new item;
+
+6'安装html,javascript,xml,ajax等插件
+6'.1 运行eclipse；help--install new software--add- 
+(Name:WebPlugin;Location:http://pydev.org/updates);
+6'.2 选择最后一个点开;一路next，安装成功;
 
 7. 安装qq：(安装不成功)
 一共用了两步：

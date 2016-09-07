@@ -36,6 +36,7 @@ axc.axis([0,25,-0.045,0.115])
 plt.xlabel('Time / h')
 plt.ylabel('Content / %')
 plt.title('CS / Dry net ')
+#plt.yticks(yticks, cluster_labels + 1)
 plt.legend([L1,L2,L3], ['1st', '2nd','3rd'])
 #axc.yaxis.set_ticks(-0.45,0.115)
 #ax.legend(loc='best')
@@ -50,4 +51,8 @@ plt.savefig('/home/caofa/xx.png')
 f,axarr=plt.subplots(nrows=2,ncols=2,
         sharex='col',sharey='row',figsize=(7,5))
 axarr[0,0].scatter(X,Y,c='blue',marker='^',s=50)
+
+plt.plot(X_fit,y_lin_fit,label='linear (d=1), $R^2=%.2f$'
+         %linear_r2,color='blue',lw=2)
+plt.ylabel('$\sqrt{ Price \; in \; \$1000\'s [MEDV]}$')
 '''
