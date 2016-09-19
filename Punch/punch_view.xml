@@ -40,7 +40,7 @@
                 <group name="group_right">
                     <button name="select_odd" type="object" string="查找异常考勤记录" class="oe_highlight"/>
                     <button name="plotfig" type="object" string="做图" class="oe_highlight"/>
-                    <img t-attf-src="Punch/static/src/img/xx.png" class="oe_module_icon" style="width:100%" />
+                    <img src="/Punch/static/src/img/xx.png" style="width: 100%; height: auto;max-width: 100%; display: block; "/>
                 </group>
             </group>
             <group>
